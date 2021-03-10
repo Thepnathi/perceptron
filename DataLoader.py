@@ -1,7 +1,7 @@
 import numpy as np
 from Constant import Constant
 
-class DataFile:
+class DataLoader:
     def __init__(self, path=Constant.DATASET_DIR):
         self.path = path
 
@@ -28,6 +28,6 @@ if __name__ == "__main__":
     dataloader = DataFile()
     train_data = dataloader.load_dataset('train.data')
     test_data = dataloader.load_dataset('test.data')
-    
+
     for i in range(len(test_data)):
         print(f'{i+1} - {test_data[i]}')
