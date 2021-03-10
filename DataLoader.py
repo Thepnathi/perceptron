@@ -25,7 +25,7 @@ class DataLoader:
         return row
 
 if __name__ == "__main__":
-    dataloader = DataFile()
+    dataloader = DataLoader()
     train_data = dataloader.load_dataset('train.data')
     test_data = dataloader.load_dataset('test.data')
 

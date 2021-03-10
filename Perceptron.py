@@ -10,17 +10,20 @@ class Perceptron:
         self.weight = weight
         self.bias = bias
 
+    # Train the Perceptron model
     def perceptron(self, train_data, epoch):
         weight = [self.weight for i in range(len(train_data))]
         bias = self.bias
         for i in range(epoch):
-            for row in dataset:
-                activation = np.dot(row, weight) + bias
-                if y * activation <= 0:
-
-
+            for row in train_data:
+                activation_score = np.dot(row, weight) + bias
+                label = row[-1]
+                if label * activation_score <= 0:
+                    weight = weight + label * row                     # Update weights and bias
+                    bias += label
+        return bias, weight
 
 
 if __name__ == "__main__":
-    perceptron = Perceptron(0, 1)
+    perceptron = Perceptron(0, 0)
     
