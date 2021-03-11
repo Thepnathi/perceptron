@@ -1,7 +1,8 @@
 import numpy as np
+from random import shuffle
 from Constant import Constant
 
-class DataLoader:
+class DatasetLoader:
     def __init__(self, path=Constant.DATASET_DIR):
         self.path = path
 
@@ -24,10 +25,23 @@ class DataLoader:
         elif row[-1] == Constant.CLASSES[3]: row[-1] = 3
         return row
 
+    # The order of training data are in order. 
+    # We want to randomise them before inputting into perceptron algorithm
+    def extract_two_classes_from_dataset(self, fileName: str, classOne=None, classTwo=None):
+        dataset = self.load_dataset(fileName)
+        shuffle(dataset)
+        if classOne and classTwo:
+            binary_dataset = []
+            for row in dataset:
+                if row[-1] == classOne or row[-1] == classTwo:
+                    binary_dataset.append(row)
+            return binary_dataset
+        return dataset
+
 if __name__ == "__main__":
-    dataloader = DataLoader()
-    train_data = dataloader.load_dataset('train.data')
-    test_data = dataloader.load_dataset('test.data')
+    dataloader = DatasetLoader()
+    # train_data = dataloader.extract_two_classes_from_dataset('train.data')
+    test_data = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
 
     for i in range(len(test_data)):
         print(f'{i+1} - {test_data[i]}')
