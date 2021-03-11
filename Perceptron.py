@@ -6,20 +6,21 @@
 
 import numpy as np
 from DatasetLoader import DatasetLoader
+
 class Perceptron:
     def __init__(self, weight, bias):
         self.weight = weight
         self.bias = bias
 
     def train_perceptron(self, train_data, num_epoch):
-        weight = [self.weight for i in range(len(train_data[0]))]
-        bias = self.bias
-        for i in range(num_epoch):
+        weight = [self.weight for i in range(len(train_data[0])-1)]        # -1 because we do not want to include the last index
+        bias = self.bias                                                   # which is the integer for the label
+        for _ in range(num_epoch):
             for row in train_data:
-                activation = self.compute_activation(row, weight, bias)
+                activation = self.compute_activation(row[:-1], weight, bias)
                 label = row[-1]
                 if label * activation <= 0:           
-                    weight = self.compute_new_weight(weight, row, label)          # Update weights and bias
+                    weight = self.compute_new_weight(weight, row[:-1], label)          # Update weights and bias
                     bias += label
         return bias, weight
 
@@ -36,9 +37,7 @@ if __name__ == "__main__":
     train_data = dataloader.extract_two_classes_from_dataset('train.data', 1, 2)
     perceptron = Perceptron(0, 0)
 
-    bias, weight = perceptron.train_perceptron(train_data, 5)
-    print(bias)
-    print(weight)
+    bias, weight = perceptron.train_perceptron(train_data, 20)
 
 
     

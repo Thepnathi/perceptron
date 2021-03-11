@@ -25,8 +25,6 @@ class DatasetLoader:
         elif row[-1] == Constant.CLASSES[3]: row[-1] = 3
         return row
 
-    # The order of training data are in order. 
-    # We want to randomise them before inputting into perceptron algorithm
     def extract_two_classes_from_dataset(self, fileName: str, classOne=None, classTwo=None):
         dataset = self.load_dataset(fileName)
         shuffle(dataset)
