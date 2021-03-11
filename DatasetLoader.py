@@ -40,7 +40,7 @@ class DatasetLoader:
 
 if __name__ == "__main__":
     dataloader = DatasetLoader()
-    # train_data = dataloader.extract_two_classes_from_dataset('train.data')
+    train_data = dataloader.extract_two_classes_from_dataset('train.data')
     test_data = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
 
     for i in range(len(test_data)):
