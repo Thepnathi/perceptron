@@ -26,25 +26,21 @@ class DatasetLoader:
         elif row[-1] == Constant.CLASSES[3]: row[-1] = 3
         return row
 
-    def extract_two_classes_from_dataset(self, fileName: str, classOne=None, classTwo=None):
+    def extract_two_classes_from_dataset(self, fileName: str, classOne, classTwo, randomise=True):
         dataset = self.load_dataset(fileName)
-        shuffle(dataset)
-        if classOne and classTwo:
-            binary_dataset = []
-            for row in dataset:
-                if row[-1] == classOne:
-                    row[-1] = 0
-                    binary_dataset.append(row)
-                elif row[-1] == classTwo:
-                    row[-1] = 1
-                    binary_dataset.append(row)
-            return binary_dataset
-        return dataset
+        shuffle(dataset) if randomise else None
+        feature_dataset = []
+        label_dataset = []
+        for row in dataset:
+            if row[-1] == classOne or row[-1] == classTwo:
+                feature_dataset.append(row[:-1])
+                label_dataset.append(row[-1])
+        return feature_dataset, label_dataset
 
 if __name__ == "__main__":
     dataloader = DatasetLoader()
-    train_data = dataloader.extract_two_classes_from_dataset('train.data')
-    test_data = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
+    train_data, train_label = dataloader.extract_two_classes_from_dataset('train.data', 1, 2)
+    test_data, test_label = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
 
     for i in range(len(test_data)):
-        print(f'{i+1} - {test_data[i]}')
+        print(f'features - {test_data[i]} label - {test_label[i]}')
