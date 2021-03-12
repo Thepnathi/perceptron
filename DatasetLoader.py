@@ -32,9 +32,12 @@ class DatasetLoader:
         feature_dataset = []
         label_dataset = []
         for row in dataset:
-            if row[-1] == classOne or row[-1] == classTwo:
+            if row[-1] == classOne:
+                label_dataset.append(1)
                 feature_dataset.append(row[:-1])
-                label_dataset.append(row[-1])
+            elif row[-1] == classTwo:
+                label_dataset.append(-1)
+                feature_dataset.append(row[:-1])
         return feature_dataset, label_dataset
 
 if __name__ == "__main__":
