@@ -1,4 +1,5 @@
 import numpy as np
+from collections import Counter
 from random import shuffle
 from Constant import Constant
 
@@ -31,7 +32,11 @@ class DatasetLoader:
         if classOne and classTwo:
             binary_dataset = []
             for row in dataset:
-                if row[-1] == classOne or row[-1] == classTwo:
+                if row[-1] == classOne:
+                    row[-1] = 0
+                    binary_dataset.append(row)
+                elif row[-1] == classTwo:
+                    row[-1] = 1
                     binary_dataset.append(row)
             return binary_dataset
         return dataset
