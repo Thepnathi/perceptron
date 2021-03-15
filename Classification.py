@@ -23,13 +23,13 @@ if __name__ == "__main__":
     # Loads the randomised dataset with two classes or all
     dataloader = DatasetLoader()
     # Data between class 1 and class 2
-    train_data1, train_label1 = dataloader.extract_two_classes_from_dataset('train.data', 1, 2, randomise=True)
+    train_data1, train_label1 = dataloader.extract_two_classes_from_dataset('train.data', 1, 2, randomise=False)
     test_data1, test_label1 = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
     # Data between class 2 and class 3
-    train_data2, train_label2 = dataloader.extract_two_classes_from_dataset('train.data', 2, 3, randomise=True)
+    train_data2, train_label2 = dataloader.extract_two_classes_from_dataset('train.data', 2, 3, randomise=False)
     test_data2, test_label2 = dataloader.extract_two_classes_from_dataset('test.data', 2, 3)
     # # Data between class 1 and class 3
-    train_data3, train_label3 = dataloader.extract_two_classes_from_dataset('train.data', 1, 3, randomise=True)
+    train_data3, train_label3 = dataloader.extract_two_classes_from_dataset('train.data', 1, 3, randomise=False)
     test_data3, test_label3 = dataloader.extract_two_classes_from_dataset('test.data', 1, 3)
 
     # Initialise perceptron with start weight of 0 and bias of 0

@@ -3,7 +3,7 @@ from collections import Counter
 from random import shuffle
 from Constant import Constant
 
-class DatasetLoader:
+class DatasetHandler:
     def __init__(self, path=Constant.DATASET_DIR):
         self.path = path
 
@@ -26,6 +26,15 @@ class DatasetLoader:
         elif row[-1] == Constant.CLASSES[3]: row[-1] = 3
         return row
 
+    def extract_all_classes_from_dataset(self, fileName: str, randomise=True):
+        dataset = self.load_dataset(fileName)
+        shuffle(dataset) if randomise else None
+        feature_dataset, label_dataset = [], []
+        for row in dataset:
+            label_dataset.append(row[-1])
+            feature_dataset.append(row[:-1])
+        return feature_dataset, label_dataset
+
     def extract_two_classes_from_dataset(self, fileName: str, classOne, classTwo, randomise=True):
         dataset = self.load_dataset(fileName)
         shuffle(dataset) if randomise else None
@@ -41,9 +50,14 @@ class DatasetLoader:
         return feature_dataset, label_dataset
 
 if __name__ == "__main__":
-    dataloader = DatasetLoader()
+    dataloader = DatasetHandler()
     train_data, train_label = dataloader.extract_two_classes_from_dataset('train.data', 1, 2)
     test_data, test_label = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
-
+    all_test_data, all_test_label = dataloader.extract_all_classes_from_dataset(fileName='test.data', randomise=False)
+    
+    # Testing if the dataset are loaded correctly
     for i in range(len(test_data)):
         print(f'features - {test_data[i]} label - {test_label[i]}')
+
+    for i in range(len(all_test_data)):
+        print(f'features - {all_test_data[i]} label - {all_test_label[i]}')

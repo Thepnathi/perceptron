@@ -34,6 +34,3 @@ if __name__ == "__main__":
     bias, weight = perceptron.train_perceptron(train_data, train_label, 20)
     print(bias)
     print(weight)
-
-    # for i in range(len(test_data)):
-    #     print(test_data[i])
