@@ -2,7 +2,7 @@
 # Task 3 - Use the binary perceptron to train classifiers:
 
 import numpy as np
-from DatasetLoader import DatasetLoader
+from DatasetHandler import DatasetHandler
 
 class Perceptron:
     def __init__(self, weight, bias):
@@ -16,7 +16,7 @@ class Perceptron:
             for i, row in enumerate(train_data):
                 activation = np.dot(weight, row) + bias
                 if label_data[i] * np.sign(activation) <= 0:  
-                    weight = self.compute_new_weight(weight, row, label_data[i])          # Update weights and bias 
+                    weight = self.compute_new_weight(weight, row, label_data[i]) 
                     bias = bias + label_data[i]
         return bias, weight
 
@@ -24,13 +24,17 @@ class Perceptron:
         newRow = np.multiply(class_value, row)
         return np.add(oldWeight, newRow)
 
+    def make_one_class_positive(self, feature_dataset, label_dataset, targetClass):
+        for i in range(len(feature_dataset)):
+            
+
 if __name__ == "__main__":
     # Loads the randomised dataset with two classes or all
-    dataloader = DatasetLoader()
+    dataloader = DatasetHandler()
     train_data, train_label = dataloader.extract_two_classes_from_dataset('train.data', 1, 2)
     test_data, test_label = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
-    perceptron = Perceptron(0, 0)
 
+    perceptron = Perceptron(0, 0)
     bias, weight = perceptron.train_perceptron(train_data, train_label, 20)
-    print(bias)
-    print(weight)
+
+    datasetL
