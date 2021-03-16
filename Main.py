@@ -1,6 +1,8 @@
 from DatasetHandler import DatasetHandler
 from Perceptron import Perceptron
 from PerceptronClassification import PerceptronClassification
+from Constant import view_dataset 
+
 
 if __name__ == "__main__":
     # Load all train dataset. Each will have one class as positive and the rest negative
@@ -12,6 +14,10 @@ if __name__ == "__main__":
     # Load the test dataset that will be used for classification accuracy
     testAll = DatasetHandler().extract_all_classes_from_dataset('test.data', randomise=False)
 
+    onlyClass1_x, onlyClass1_y = testAll.feature_dataset[:10], testAll.label_dataset[:10]
+
+    view_dataset(onlyClass1_x, onlyClass1_y)
+
     # Initialise the perceptron algorithm to train our model
     perceptron = Perceptron(0, 0)
 
@@ -20,12 +26,6 @@ if __name__ == "__main__":
     model2 = perceptron.train_perceptron(train2.feature_dataset, train2.label_dataset, 20)
     model3 = perceptron.train_perceptron(train3.feature_dataset, train3.label_dataset, 20)
 
-
-    def testDataset(feature, label):
-        for i in range(len(feature)):
-            print(f'features - {feature[i]}, label - {label[i]}')
-
-    # testDataset(train1.feature_dataset, train1.label_dataset)
-    # testDataset(train2.feature_dataset, train2.label_dataset)
-    # testDataset(train3.feature_dataset, train3.label_dataset)
-    testDataset(testAll.feature_dataset, testAll.label_dataset)
+    print(model1)
+    print(model2)
+    print(model3)

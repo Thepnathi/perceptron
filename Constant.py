@@ -8,3 +8,8 @@ class Constant:
     NEWLINE = "\n"
 
     BREAKPOINT = "======" * 10
+
+# Some helper functions
+def view_dataset(feature_dataset, label_dataset):
+    for i in range(len(feature_dataset)):
+        print(f'features - {feature_dataset[i]} label - {label_dataset[i]}')
