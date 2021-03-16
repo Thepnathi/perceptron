@@ -32,6 +32,7 @@ class DatasetHandler:
         return row
 
     # Make dataset includes all corresponding label as integer
+    # The randomise set to False so the data order will be the same as the dataset file
     def extract_all_classes_from_dataset(self, fileName: str, randomise=False):
         self.load_dataset(fileName)
         shuffle(self.raw_dataset) if randomise else None
