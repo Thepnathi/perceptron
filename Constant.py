@@ -6,3 +6,5 @@ class Constant:
     DATASET_DELIMETER = ","
     
     NEWLINE = "\n"
+
+    BREAKPOINT = "======" * 10

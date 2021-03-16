@@ -3,20 +3,21 @@
 import numpy as np
 from DatasetHandler import DatasetHandler
 from Perceptron import Perceptron
+from Constant import Constant
 
 class PerceptronClassification:
-    def predictict(self, dataRow, bias, weight):
+    def activation_score(self, dataRow, bias, weight):
         activation = np.dot(dataRow, weight) + bias
         return np.sign(activation)
 
-    # Given a test dataset with feature + label array. Returns the total accuracy for correct prediction
+    # Given a test dataset with feature + label array. Returns the total accuracy for correct activation_scoreion
     def compute_test_dataset_accuracy(self, test_data, test_label, bias, weight):
-        correct_predictict = 0
+        correct_activation_score = 0
         for i, row in enumerate(test_data):
-            activation_score = self.predictict(row, bias, weight)
+            activation_score = self.activation_score(row, bias, weight)
             if activation_score == test_label[i]:
-                correct_predictict += 1
-        return (correct_predictict / len(test_data)) * 100
+                correct_activation_score += 1
+        return (correct_activation_score / len(test_data)) * 100
 
 if __name__ == "__main__":
     # Loads the randomised dataset with two classes or all
@@ -42,12 +43,28 @@ if __name__ == "__main__":
     bias3, weight3 = perceptron.train_perceptron(train3.feature_dataset, train3.label_dataset, 20)
 
     # Initialise classification class to compute accuracy of test data
-    predict = PerceptronClassification()
+    activation_score = PerceptronClassification()
 
-    acc1 = predict.compute_test_dataset_accuracy(test1.feature_dataset, test1.label_dataset, bias1, weight1)
-    acc2 = predict.compute_test_dataset_accuracy(test2.feature_dataset, test2.label_dataset, bias2, weight2)
-    acc3 = predict.compute_test_dataset_accuracy(test3.feature_dataset, test3.label_dataset, bias3, weight3)
+    # Compute the total accuracy for the three model given the train dataset
+    trainAcc1 = activation_score.compute_test_dataset_accuracy(train1.feature_dataset, train1.label_dataset, bias1, weight1)
+    trainAcc2 = activation_score.compute_test_dataset_accuracy(train2.feature_dataset, train2.label_dataset, bias2, weight2)
+    trainAcc3 = activation_score.compute_test_dataset_accuracy(train3.feature_dataset, train3.label_dataset, bias3, weight3)
 
-    print(f"Test dataset with class 1 and 2 with accuracy of {acc1}%")
-    print(f"Test dataset with class 2 and 3 with accuracy of {acc2}%")
-    print(f"Test dataset with class 1 and 3 with accuracy of {acc3}%")
+    # Compute the total accuracy for the three model given the test dataset
+    testAcc1 = activation_score.compute_test_dataset_accuracy(test1.feature_dataset, test1.label_dataset, bias1, weight1)
+    testAcc2 = activation_score.compute_test_dataset_accuracy(test2.feature_dataset, test2.label_dataset, bias2, weight2)
+    testAcc3 = activation_score.compute_test_dataset_accuracy(test3.feature_dataset, test3.label_dataset, bias3, weight3)
+
+    print("The classifcation results for training and testing dataset are:")
+
+    print(Constant.BREAKPOINT)
+
+    print(f"Train dataset with class 1 and 2 with accuracy of {trainAcc1}%")
+    print(f"Train dataset with class 2 and 3 with accuracy of {trainAcc2}%")
+    print(f"Train dataset with class 1 and 3 with accuracy of {trainAcc3}%")
+
+    print(Constant.BREAKPOINT)
+
+    print(f"Test dataset with class 1 and 2 with accuracy of {testAcc1}%")
+    print(f"Test dataset with class 2 and 3 with accuracy of {testAcc2}%")
+    print(f"Test dataset with class 1 and 3 with accuracy of {testAcc3}%")
