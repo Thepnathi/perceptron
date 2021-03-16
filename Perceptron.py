@@ -9,6 +9,7 @@ class Perceptron:
         self.weight = weight
         self.bias = bias
 
+    # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
     def train_perceptron(self, train_data, label_data, num_epoch=20):
         weight = np.zeros(len(train_data[0]))    
         bias = 0                                                  
@@ -24,17 +25,15 @@ class Perceptron:
         newRow = np.multiply(class_value, row)
         return np.add(oldWeight, newRow)
 
-    def make_one_class_positive(self, feature_dataset, label_dataset, targetClass):
-        for i in range(len(feature_dataset)):
-            
-
 if __name__ == "__main__":
-    # Loads the randomised dataset with two classes or all
-    dataloader = DatasetHandler()
-    train_data, train_label = dataloader.extract_two_classes_from_dataset('train.data', 1, 2)
-    test_data, test_label = dataloader.extract_two_classes_from_dataset('test.data', 1, 2)
+    # Loads the test dataset for class 1 and class 2 in order 
+    test1 = DatasetHandler()
+    test1.extract_two_classes_from_dataset('test.data', 1, 2)
 
+    # Initialise the Perceptron object with 0 weight and 0 bias
+    # Train a model given test1 dataset
     perceptron = Perceptron(0, 0)
-    bias, weight = perceptron.train_perceptron(train_data, train_label, 20)
+    bias, weight = perceptron.train_perceptron(test1.feature_dataset, test1.label_dataset, 20)
 
-    datasetL
+    print("Perceptron model with test dataset for class 1 and 2...")
+    print(f"Bias is {bias} and Weight of {weight}")

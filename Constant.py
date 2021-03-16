@@ -4,4 +4,5 @@ class Constant:
     DATASET_DIR = "dataset"
 
     DATASET_DELIMETER = ","
+    
     NEWLINE = "\n"

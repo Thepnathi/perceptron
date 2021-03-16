@@ -72,15 +72,23 @@ class DatasetHandler:
         return self
 
 if __name__ == "__main__":
+    # Loads the test dataset for class 1 and class 2 in order 
     test1 = DatasetHandler()
     test1.extract_two_classes_from_dataset('test.data', 1, 2)
 
-    testAll = DatasetHandler()
-    testAll.extract_all_classes_from_dataset('test.data').make_one_class_positive(2.0)
+    # Loads the train and test dataset for class 2 and class 3 in randomised order
+    train2 = DatasetHandler().extract_two_classes_from_dataset('train.data', 2, 3, randomise=True)
+    test2 = DatasetHandler().extract_two_classes_from_dataset('test.data', 2, 3, randomise=True)
+
+    # Loads all the test dataset for all classes. Make the only class two positive and rest negative
+    testAll = DatasetHandler().extract_all_classes_from_dataset('test.data').make_one_class_positive(2.0)
     
     # Testing if the dataset are loaded correctly
+    print(len(test1.feature_dataset))
     for i in range(len(test1.feature_dataset)):
         print(f'features - {test1.feature_dataset[i]} label - {test1.label_dataset[i]}')
 
+    print("\nTesting all test dataset with one positive and rest negative\n")
+    print(len(testAll.feature_dataset))
     for i in range(len(testAll.feature_dataset)):
         print(f'features - {testAll.feature_dataset[i]}, label - {testAll.label_dataset[i]}')
