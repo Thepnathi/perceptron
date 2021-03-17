@@ -58,7 +58,7 @@ if __name__ == "__main__":
     testAcc2 = activation_score.compute_prediction_accuracy(test2.feature_dataset, test2.label_dataset, m2.get_bias(), m2.get_weight())
     testAcc3 = activation_score.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, m3.get_bias(), m3.get_weight())
 
-    print("The classifcation results for training and testing dataset are:")
+    print("The perceptron binary classifcation accuracy for training and testing dataset are:")
 
     print(Constant.BREAKPOINT)
 
