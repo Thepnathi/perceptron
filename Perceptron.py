@@ -11,15 +11,15 @@ class Perceptron:
         self.bias = bias
 
     # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
-    def train_perceptron(self, train_data, label_data, num_epoch=20) -> Tuple[int, list[float]]:
-        weight = np.zeros(len(train_data[0]))    
+    def train_perceptron(self, feature_dataset, label_dataset, num_epoch=20) -> Tuple[int, list[float]]:
+        weight = np.zeros(len(feature_dataset[0]))    
         bias = 0                                                  
         for _ in range(num_epoch):
-            for i, row in enumerate(train_data):
+            for i, row in enumerate(feature_dataset):
                 activation = np.dot(weight, row) + bias
-                if label_data[i] * np.sign(activation) <= 0:  
-                    weight = self.compute_new_weight(weight, row, label_data[i]) 
-                    bias = bias + label_data[i]
+                if label_dataset[i] * np.sign(activation) <= 0:  
+                    weight = self.compute_new_weight(weight, row, label_dataset[i]) 
+                    bias = bias + label_dataset[i]
         self.weight, self.bias = weight, bias
 
     def compute_new_weight(self, oldWeight, row, class_value):

@@ -12,12 +12,12 @@ class PerceptronClassification:
         
     # Given a test dataset with feature + label array. Returns the total accuracy for correct activation_scoreion
     def compute_prediction_accuracy(self, feature_dataset, label_dataset, bias, weight) -> int:
-        correct_activation_score = 0
+        correct_prediction = 0
         for i, data_row in enumerate(feature_dataset):
-            activation_score = self.activation_score(data_row, bias, weight)
+            activation_score = self.activation_score(data_row, weight, bias)
             if activation_score == label_dataset[i]:
-                correct_activation_score += 1
-        return (correct_activation_score / len(feature_dataset)) * 100
+                correct_prediction += 1
+        return (correct_prediction / len(feature_dataset)) * 100
 
 
 if __name__ == "__main__":
@@ -36,25 +36,27 @@ if __name__ == "__main__":
     test3 = DatasetHandler().extract_two_classes_from_dataset('test.data', 1, 3, randomise=False)
 
     # Initialise perceptron algorithm with start weight of 0 and bias of 0
-    perceptron = Perceptron(0, 0)
+    m1 = Perceptron(0, 0)
+    m2 = Perceptron(0, 0)
+    m3 = Perceptron(0, 0)
 
     # Training the perceptron with 20 iterations for the three types of train dataset we have loaded
-    bias1, weight1 = perceptron.train_perceptron( train1.feature_dataset, train1.label_dataset, 20)
-    bias2, weight2 = perceptron.train_perceptron(train2.feature_dataset, train2.label_dataset, 20)
-    bias3, weight3 = perceptron.train_perceptron(train3.feature_dataset, train3.label_dataset, 20)
+    m1.train_perceptron( train1.feature_dataset, train1.label_dataset, 20)
+    m2.train_perceptron(train2.feature_dataset, train2.label_dataset, 20)
+    m3.train_perceptron(train3.feature_dataset, train3.label_dataset, 20)
 
     # Initialise classification class to compute accuracy of test data
     activation_score = PerceptronClassification()
 
     # Compute the total accuracy for the three model given the train dataset
-    trainAcc1 = activation_score.compute_prediction_accuracy(train1.feature_dataset, train1.label_dataset, bias1, weight1)
-    trainAcc2 = activation_score.compute_prediction_accuracy(train2.feature_dataset, train2.label_dataset, bias2, weight2)
-    trainAcc3 = activation_score.compute_prediction_accuracy(train3.feature_dataset, train3.label_dataset, bias3, weight3)
+    trainAcc1 = activation_score.compute_prediction_accuracy(train1.feature_dataset, train1.label_dataset, m1.get_bias(), m1.get_weight())
+    trainAcc2 = activation_score.compute_prediction_accuracy(train2.feature_dataset, train2.label_dataset, m2.get_bias(), m2.get_weight())
+    trainAcc3 = activation_score.compute_prediction_accuracy(train3.feature_dataset, train3.label_dataset, m3.get_bias(), m3.get_weight())
 
     # Compute the total accuracy for the three model given the test dataset
-    testAcc1 = activation_score.compute_prediction_accuracy(test1.feature_dataset, test1.label_dataset, bias1, weight1)
-    testAcc2 = activation_score.compute_prediction_accuracy(test2.feature_dataset, test2.label_dataset, bias2, weight2)
-    testAcc3 = activation_score.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, bias3, weight3)
+    testAcc1 = activation_score.compute_prediction_accuracy(test1.feature_dataset, test1.label_dataset, m1.get_bias(), m1.get_weight())
+    testAcc2 = activation_score.compute_prediction_accuracy(test2.feature_dataset, test2.label_dataset, m2.get_bias(), m2.get_weight())
+    testAcc3 = activation_score.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, m3.get_bias(), m3.get_weight())
 
     print("The classifcation results for training and testing dataset are:")
 
