@@ -3,7 +3,7 @@
 
 import numpy as np
 from DatasetHandler import DatasetHandler
-from typing import Tuple
+from random import shuffle
 
 class Perceptron:
     def __init__(self, weight, bias):
@@ -11,7 +11,7 @@ class Perceptron:
         self.bias = bias
 
     # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
-    def train_perceptron(self, feature_dataset, label_dataset, num_epoch=20) -> Tuple[int, list[float]]:
+    def train_perceptron(self, feature_dataset, label_dataset, num_epoch=20):
         weight = np.zeros(len(feature_dataset[0]))    
         bias = 0                                                  
         for _ in range(num_epoch):
@@ -25,6 +25,12 @@ class Perceptron:
     def compute_new_weight(self, oldWeight, row, class_value):
         newRow = np.multiply(class_value, row)
         return np.add(oldWeight, newRow)
+
+    def randomise_dataset(self, feature_dataset, label_dataset):
+        combine_together = list(zip(feature_dataset, label_dataset))
+        shuffle(combine_together)
+        feature_dataset, label_dataset = zip(*combine_together)
+        return feature_dataset, label_dataset
 
     def get_weight(self):
         return self.weight
