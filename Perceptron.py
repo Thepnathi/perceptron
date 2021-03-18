@@ -27,9 +27,9 @@ class Perceptron:
         return np.add(oldWeight, newRow)
 
     def randomise_dataset(self, feature_dataset, label_dataset):
-        combine_together = list(zip(feature_dataset, label_dataset))
-        shuffle(combine_together)
-        feature_dataset, label_dataset = zip(*combine_together)
+        combine_feature_and_label = list(zip(feature_dataset, label_dataset))
+        shuffle(combine_feature_and_label)
+        feature_dataset, label_dataset = zip(*combine_feature_and_label)
         return feature_dataset, label_dataset
 
     def get_weight(self):
