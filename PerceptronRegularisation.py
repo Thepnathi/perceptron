@@ -25,7 +25,6 @@ class PerceptronRegularisation(Perceptron):
         self.weight, self.bias = weight, bias
 
     # Returns the new weight after we apply the stochastic gradient update and regularisation term
-    # W <- W - learning_rate(-yi * Xi + 2*coefficient*W)
     def apply_l2_regularisation(self, old_weight, row, class_value, coefficient):
         new_weight = np.multiply((1-2*coefficient), old_weight)             # W = (1-2cofficient) * W + yi * Xi
         result = np.add(new_weight, np.multiply(class_value, row))

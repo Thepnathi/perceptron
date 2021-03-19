@@ -19,13 +19,19 @@ class PerceptronClassification:
                 correct_prediction += 1
         return (correct_prediction / len(feature_dataset)) * 100
 
+from Constant import view_dataset
 
 if __name__ == "__main__":
+    # Question 1 to 3
     # Loads the randomised dataset with two classes or all
 
      # Test and Train Dataset for class 1 and class 2
     train1 = DatasetHandler().extract_two_classes_from_dataset('train.data', 1, 2, randomise=False)
     test1 = DatasetHandler().extract_two_classes_from_dataset('test.data', 1, 2, randomise=False)
+
+    view_dataset(train1.feature_dataset, train1.label_dataset)
+    print(Constant.BREAKPOINT)
+    view_dataset(test1.feature_dataset, test1.label_dataset)
 
     # Test and Train Dataset for class 2 and class 3
     train2 = DatasetHandler().extract_two_classes_from_dataset('train.data', 2, 3, randomise=False)
@@ -58,16 +64,16 @@ if __name__ == "__main__":
     testAcc2 = activation_score.compute_prediction_accuracy(test2.feature_dataset, test2.label_dataset, m2.get_bias(), m2.get_weight())
     testAcc3 = activation_score.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, m3.get_bias(), m3.get_weight())
 
-    print("The perceptron binary classifcation accuracy for training and testing dataset are:")
+    # print("The perceptron binary classifcation accuracy for training and testing dataset are:")
 
-    print(Constant.BREAKPOINT)
+    # print(Constant.BREAKPOINT)
 
-    print(f"Train dataset with class 1 and 2 with accuracy of {trainAcc1}%")
-    print(f"Train dataset with class 2 and 3 with accuracy of {trainAcc2}%")
-    print(f"Train dataset with class 1 and 3 with accuracy of {trainAcc3}%")
+    # print(f"Train dataset with class 1 and 2 with accuracy of {trainAcc1}%")
+    # print(f"Train dataset with class 2 and 3 with accuracy of {trainAcc2}%")
+    # print(f"Train dataset with class 1 and 3 with accuracy of {trainAcc3}%")
 
-    print(Constant.BREAKPOINT)
+    # print(Constant.BREAKPOINT)
 
-    print(f"Test dataset with class 1 and 2 with accuracy of {testAcc1}%")
-    print(f"Test dataset with class 2 and 3 with accuracy of {testAcc2}%")
-    print(f"Test dataset with class 1 and 3 with accuracy of {testAcc3}%")
+    # print(f"Test dataset with class 1 and 2 with accuracy of {testAcc1}%")
+    # print(f"Test dataset with class 2 and 3 with accuracy of {testAcc2}%")
+    # print(f"Test dataset with class 1 and 3 with accuracy of {testAcc3}%")

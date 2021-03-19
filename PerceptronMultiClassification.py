@@ -29,12 +29,12 @@ class PerceptronMultiClassification(PerceptronClassification):
 
 
 if __name__ == "__main__":
+    # Question 4
     # Load all train dataset. Each will have one class as positive and the rest negative
     # The training dataset with one class positive will be used for one-vs-rest perceptron classification. There will be k dataset for k classes
     train1 = DatasetHandler().extract_all_classes_from_dataset('train.data', randomise=False).make_one_class_positive(1) # class_1-vs-rest
     train2 = DatasetHandler().extract_all_classes_from_dataset('train.data', randomise=False).make_one_class_positive(2) # class_2-vs-rest
     train3 = DatasetHandler().extract_all_classes_from_dataset('train.data', randomise=False).make_one_class_positive(3) # class_3-vs-rest
-
 
     # Load the test dataset that will be used for classification accuracy
     test_data = DatasetHandler().extract_all_classes_from_dataset('test.data', randomise=False)
