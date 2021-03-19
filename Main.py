@@ -95,10 +95,12 @@ class Perceptron:
         self.bias = bias
 
     # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
-    def train_perceptron(self, feature_dataset, label_dataset, num_epoch=20):
+    def train_perceptron(self, feature_dataset, label_dataset, num_epoch=20, randomise=True):
         weight = np.zeros(len(feature_dataset[0]))    
         bias = 0                                                  
         for _ in range(num_epoch):
+            if randomise:
+                feature_dataset, label_dataset = self.randomise_dataset(feature_dataset, label_dataset)
             for i, row in enumerate(feature_dataset):
                 activation = np.dot(weight, row) + bias
                 if label_dataset[i] * np.sign(activation) <= 0:  
@@ -130,10 +132,12 @@ class PerceptronRegularisation(Perceptron):
 
     # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
     # In our case the learning rate will be at 1 for Perceptron
-    def train_perceptron_l2(self, feature_dataset, label_dataset, coefficient, num_epoch=20):
+    def train_perceptron_l2(self, feature_dataset, label_dataset, coefficient, num_epoch=20, randomise=True):
         weight = np.zeros(len(feature_dataset[0]))    
         bias = 0                                                  
         for _ in range(num_epoch):
+            if randomise:
+                feature_dataset, label_dataset = self.randomise_dataset(feature_dataset, label_dataset)
             for i, row in enumerate(feature_dataset):
                 activation = np.dot(weight, row) + bias
                 if label_dataset[i] * np.sign(activation) <= 0:  
@@ -190,7 +194,10 @@ class PerceptronMultiClassification(PerceptronClassification):
 
 
 if __name__ == "__main__":
+    print("\n")
 
+    # ================================================================================================================
+    # ================================================================================================================
     # Question 3 - Compute the accuracy for the three types of classes
     # ================================================================================================================
     # ================================================================================================================
@@ -231,6 +238,34 @@ if __name__ == "__main__":
     testAcc3 = classify.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, m3.get_bias(), m3.get_weight())
     
     print("Question 3 - Report the train and test classification accuracies:")
+    print("The training dataset were randomised during each epoch.")
+    print(Constant.BREAKPOINT)
+    print("The result for class 1 and class 2 prediction: ")
+    print(f'Test dataset: {testAcc1}%')
+    print(f'Train dataset: {trainAcc1}%')
+    print("The result for class 2 and class 3 prediction: ")
+    print(f'Test dataset: {testAcc2}%')
+    print(f'Train dataset: {trainAcc2}%')
+    print("The result for class 1 and class 3 prediction: ")
+    print(f'Test dataset: {testAcc3}%')
+    print(f'Train dataset: {trainAcc3}%')
+    print("\n")
+
+    # This time the dataset will not be randomised
+    m1.train_perceptron( train1.feature_dataset, train1.label_dataset, 20, randomise=False)
+    m2.train_perceptron(train2.feature_dataset, train2.label_dataset, 20, randomise=False)
+    m3.train_perceptron(train3.feature_dataset, train3.label_dataset, 20, randomise=False)
+
+    trainAcc1 = classify.compute_prediction_accuracy(train1.feature_dataset, train1.label_dataset, m1.get_bias(), m1.get_weight())
+    trainAcc2 = classify.compute_prediction_accuracy(train2.feature_dataset, train2.label_dataset, m2.get_bias(), m2.get_weight())
+    trainAcc3 = classify.compute_prediction_accuracy(train3.feature_dataset, train3.label_dataset, m3.get_bias(), m3.get_weight())
+    
+    testAcc1 = classify.compute_prediction_accuracy(test1.feature_dataset, test1.label_dataset, m1.get_bias(), m1.get_weight())
+    testAcc2 = classify.compute_prediction_accuracy(test2.feature_dataset, test2.label_dataset, m2.get_bias(), m2.get_weight())
+    testAcc3 = classify.compute_prediction_accuracy(test3.feature_dataset, test3.label_dataset, m3.get_bias(), m3.get_weight())
+    
+    print("Question 3 - Report the train and test classification accuracies:")
+    print("The training dataset will not be randomised during each epoch.")
     print(Constant.BREAKPOINT)
     print("The result for class 1 and class 2 prediction: ")
     print(f'Test dataset: {testAcc1}%')
@@ -244,6 +279,8 @@ if __name__ == "__main__":
     print("\n")
 
 
+    # ================================================================================================================
+    # ================================================================================================================
     # Question 4 - Report the classification accuracies for 1-vs-rest approach
     # ================================================================================================================
     # ================================================================================================================
@@ -276,6 +313,7 @@ if __name__ == "__main__":
     test_res = predict.compute_multiclass_prediction_accuracy(test_data.feature_dataset, test_data.label_dataset, model1, model2, model3)
     train_res = predict.compute_multiclass_prediction_accuracy(train_data.feature_dataset, train_data.label_dataset, model1, model2, model3)
     print("Question 4 - Report the train and test classification accuracies for 1-vs-rest:")
+    print("The training dataset were randomised during each epoch.")
     print(Constant.BREAKPOINT)
     print("This is the accuracy for test dataset using 1-vs-rest classification: ")
     print(f'{test_res}%')
@@ -283,6 +321,24 @@ if __name__ == "__main__":
     print(f'{train_res}%')
     print("\n")
     
+    # We will not randomised the dataset
+    model1.train_perceptron(train1.feature_dataset, train1.label_dataset, 20, False)   # class_1-vs-rest
+    model2.train_perceptron(train2.feature_dataset, train2.label_dataset, 20, False)   # class_2-vs-rest
+    model3.train_perceptron(train3.feature_dataset, train3.label_dataset, 20, False)   # class_3-vs-rest
+
+    test_res = predict.compute_multiclass_prediction_accuracy(test_data.feature_dataset, test_data.label_dataset, model1, model2, model3)
+    train_res = predict.compute_multiclass_prediction_accuracy(train_data.feature_dataset, train_data.label_dataset, model1, model2, model3)
+    print("Question 4 - Report the train and test classification accuracies for 1-vs-rest:")
+    print("The training dataset will not be randomised during each epoch.")
+    print(Constant.BREAKPOINT)
+    print("This is the accuracy for test dataset using 1-vs-rest classification: ")
+    print(f'{test_res}%')
+    print("This is the accuracy for train dataset using 1-vs-rest classification: ")
+    print(f'{train_res}%')
+    print("\n")
+
+    # ================================================================================================================
+    # ================================================================================================================
     # Question 5 - Report the classification accuracies for the l2 regularisation Perceptron
     # ================================================================================================================
     # ================================================================================================================
