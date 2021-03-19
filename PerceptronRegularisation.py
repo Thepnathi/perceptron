@@ -13,10 +13,12 @@ class PerceptronRegularisation(Perceptron):
 
     # Train the perceptron model given feature and corresponding label dataset. Model can be trained for n number of iterations
     # In our case the learning rate will be at 1 for Perceptron
-    def train_perceptron_l2(self, feature_dataset, label_dataset, coefficient, num_epoch=20):
+    def train_perceptron_l2(self, feature_dataset, label_dataset, coefficient, num_epoch=20, randomise=True):
         weight = np.zeros(len(feature_dataset[0]))    
         bias = 0                                                  
         for _ in range(num_epoch):
+            if randomise:
+                feature_dataset, label_dataset = self.randomise_dataset(feature_dataset, label_dataset)
             for i, row in enumerate(feature_dataset):
                 activation = np.dot(weight, row) + bias
                 if label_dataset[i] * np.sign(activation) <= 0:  

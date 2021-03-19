@@ -1,5 +1,9 @@
+# =========================================
+# Name: Thepnathi Chindalaksanaloet
+# Student ID: 201123978
+# =========================================
+
 import numpy as np
-from collections import Counter
 from random import shuffle
 
 class Constant:
@@ -108,6 +112,7 @@ class Perceptron:
                     bias = bias + label_dataset[i]
         self.weight, self.bias = weight, bias
 
+    # Compute the activation score
     def compute_new_weight(self, oldWeight, row, class_value):
         newRow = np.multiply(class_value, row)
         return np.add(oldWeight, newRow)
@@ -141,7 +146,7 @@ class PerceptronRegularisation(Perceptron):
             for i, row in enumerate(feature_dataset):
                 activation = np.dot(weight, row) + bias
                 if label_dataset[i] * np.sign(activation) <= 0:  
-                    weight = self.apply_l2_regularisation(weight, row, label_dataset[i], coefficient)
+                    weight = self.apply_l2_regularisation(weight, row, label_dataset[i], coefficient) # This is where we will apply l2 regularisation term
                     bias = bias + label_dataset[i]
         self.weight, self.bias = weight, bias
 
